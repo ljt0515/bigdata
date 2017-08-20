@@ -86,6 +86,8 @@
 		<module>bigdata-storm</module>
 		<module>bigdata-hive</module>
 		<module>bigdata-hbase</module>
+		<module>bigdata-tools</module>
+		<module>bigdata-courseware</module>
 	</modules>
 	
 </project>

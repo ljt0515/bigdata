@@ -1,0 +1,187 @@
+
+>>>>>>用户和组
+	Linux系统上，创建用户的时候，默认情况会给我们创建一个用户组（名称与用户名相同）
+
+>>>>>>>> 文件
+在Linux系统下面，文件类型（常见三种类型）
+	* 文件
+		-
+	* 目录（类似Win7下的文件夹）
+		d
+	* 连接（类似Win7下快捷方式）
+		l
+文件权限
+	* 可读 r
+	* 可写 w
+	* 可执行（脚本，比如shell脚本） x
+	特殊字符
+		-
+		表示的是没有任何权限
+权限数字表示方法
+	rw-  ->  6
+	二进制数字之和的方式
+	R 		W 		X
+	2^2     2^1 	2^0
+	4 		2 		1
+
+
+文件的归属
+	* 拥有者 owner  u
+	* 属于组 group  g
+	* 其他人 other  o
+
+----------------------------------------------------
+drwxr-xr-x. 2 beifeng beifeng      4096 Sep 28 11:05 Downloads
+
+-rw-rw-r--. 1 beifeng beifeng        65 Sep 28 12:15 hive-select-log.sql
+
+第一部分：
+	-rw-rw-r--
+十个字符，代表不同的意义
+	-	rw- 	rw- 	r--   -> 数字表示权限:   664
+第一字符：
+	表示的是文件的类型
+后面的九个字符，分为三组，表示此文件针对不同用户的权限关系。
+	为什么是三组？
+	因为一个文件对于用户来说，三个部分
+		* 拥有者 rw-   
+		* 所属组 rw-
+		* 其他人 r--
+第二部分：
+	beifeng beifeng
+* 第一字符串表示的是 文件的拥有者 ，beifeng
+* 第二个字符表示的是 文件所属组， beifeng
+
+
+==================================================================
+* man cmdName
+* 命令行来说，自动补全功能，Tab键
+
+如何设置文件对不同用户的权限
+	需要使用root用户
+chmod 命令
+	change mode
+eg：
+	-rw-rw-r--. 1 beifeng beifeng        65 Sep 28 12:32 hive-select-log.sql
+需求：
+	对于同组用户来说，仅仅可读；对于其他用户来说，既不可读也不可写。
+	# chmod g-w hive-select-log.sql
+	# chmod o-r hive-select-log.sql
+数字形式
+	# chmod 664 hive-select-log.sql
+问题:
+	如果针对一个目录，设置权限呢？？ 目录中有很多文件，也需要同样的权限设置
+-R, --recursive     递归
+              change files and directories recursively
+    # chmod -R 664 /opt/softwares
+
+>>>>>>>> 文件拷贝
+$ cp hive-select-log.sql /home
+
+
+
+>>>>>>>> 改变文件拥有者和所属组
+命令
+	chowner
+		# chown beifeng /home/hive-select-log.sql
+	chgrp
+		# chgrp beifeng /home/hive-select-log.sql
+如果针对目录
+		# chown -R beifeng /opt/softwares
+案例：
+	将/home/hive-select-log.sql 拥有者和所属组设置为senior用户和senior组
+可以使用一条命令完成操作
+	# chown senior:senior /home/hive-select-log.sql
+
+========================================================================
+>>>>> 文件创建
+* 使用touch命令
+	$ touch test.data
+* 使用vi/vim方式
+	$ vi test.txt
+
+对文件的内容进行追加
+	$ echo "xxxxyyyyzzz" >> text.txt
+
+编辑文件内容vi/vim
+	快捷键
+	在vi查看模式下
+		* dd ：表示删除光标所在的行的内容
+		* ZZ ：表示的是保存文件内容
+		* x  ：表示将光标处的字符给删除
+		* o  : 表示在光标的下一行进行插入内容
+
+查看文件内容的常见几种方式
+	* cat  ： 全部内容,内容比较少
+	* more :  翻页查看
+	* tail :  末尾内容，通常与 -f参数连用，适合于查看服务实时动态日志信息
+		eg:
+			tail -f xxxx.log
+			tail -200f yyy.log
+	* head :  开头文件，文件格式，内容模板样式
+
+>>>>>> 文件拷贝，移动，重命名
+拷贝
+		语法：cp source dest
+		dest:
+			文件名称，可以是目录
+		## 拷贝一个文件到一个目录中去
+		$ cp test.txt test-dir
+		## 拷贝一个文件的内容至一个文件中（新文件）
+		$ cp test.txt cp-test.txt
+	source
+		拷贝一个目录
+		$ cp -r test-dir test-dir2
+移动或者重命名
+	语法：
+		mv src dest
+	重命名
+		src和dest在同一个目录下
+	$ mv test-dir/ sub-dir
+	$ mv test.txt test.log
+	移动
+		src和dest不在同一目录或者
+	$ mv test-dir2/sub-dir/ test-dir
+
+>>>>>>>>>>>>文件的删除
+$ rmdir test-dir
+rmdir 注意删除的目录必须要是空目录
+$ rm -rf src
+使用的时候：src最好是绝对路劲，确定好以后再删除
+
+>>>>>>>> 创建目录
+	$ mkdir test
+创建多级目录
+	$ mkdir -p ~/data/dfs/tmp
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>
+连接 （	类似Win7 快捷方式）
+	* 软连接soft link
+	* 硬链接hard link
+区别：
+	再删除连接时，是否删除源文件
+案例：
+	## 创建一个软连接
+	$ ln -s file/dir linkName
+	eg:
+		$ ln -s readme.txt rm.txt
+lrwxrwxrwx. 1 beifeng beifeng       10 Sep 28 16:14 rm.txt -> readme.txt
+	## 创建一个硬链接
+	$ ln www.ibeifeng.access.log bf-log
+就相当于拷贝一个文件了
+
+使用场景：
+	/opt/hadoop/conf				/opt/hbase/conf
+	core-site.xml					ln -> core-site.xml
+	hdfs-site.xml					ln -> hdfs-site.xml
+保证一致性
+
+====================================
+文件搜索
+	$ find ~/ -name file
+	$ find ~/ -name read\*
+
+
+
+
+
