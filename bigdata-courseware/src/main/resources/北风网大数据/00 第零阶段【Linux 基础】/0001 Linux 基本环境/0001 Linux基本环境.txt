@@ -1,0 +1,148 @@
+
+Hadoop 前置课程
+	* Linux 系统，基本命令
+	* Java 语言，JSE 相关知识
+	* MYSQL基本的DML和DDL
+		SQL on HADOOP
+
+==================================================================
+CentOS 6.4版本，64位
+
+http://archive.cloudera.com/cdh5/
+在整个大数据领域，对于Hadoop 发行版本，有公司Cloudera
+
+>>>>>>> 虚拟化工具VMWare
+1）安装VMWare虚拟机软件
+	2）创建虚拟机					---- 此处省略
+	3）安装CentOS 6.4操作系统		---- 此处省略
+4）导入已经安装好的虚拟机
+
+
+>>>>>>>>> Linux 用户
+对于Linux系统安装时，有一个默认的超管管理员用户root
+	root/123456
+登录到Linux系统，命令行界面时，
+[root@hadoop-senior Desktop] #
+ 用户名		主机名	 所在目录名称
+
+有两个字符
+	# ：表示当前用户属于root用户，超级管理员用户
+		对系统进行配置管理的时候，需要使用root用户
+	$ : 表示用户属于普通用户
+
+在Linux系统下，查看Ip地址命令
+	# ifconfig
+	类似于我们在Win系统下，查看IP地址的命令
+	ipconfig
+
+>>>>>>> linux 基本命令
+清理屏幕
+	# clear
+创建用户
+	# useradd beifeng
+	对于Linux下每个用户，都有密码
+	# passwd beifeng
+	在Linux系统下，默认情况下，创建一个用户的同时会给用户在系统的目录下创建一个属于自己的用户目录，改目录称为用户主目录
+	规则：/home/username
+	beifeng用户：/home/beifeng, 用户主目录可以使用 ~ 进行表示
+切换用户
+	#|$ su - beifeng
+	注意事项：
+		* root用户切换到普通用户
+			# su - beifeng
+			不需要输入密码
+		* 普通用户切换到root用户
+			$ su
+			需要输入root用户秘密
+显示当前用户所在的目录
+	$|# pwd
+Linux系统的主机名称
+	* 查看主机名称
+		#|$ hostname
+	* 设置主机名称
+		# hostname hadoop-senior.ibeifeng.com
+	注意事项：
+		此种方式设置主机名称，仅仅在当前使用没有问题，当时重启机器以后，主机名称会变化。
+		为什么？？？？？
+		原因：在linux系统中，系统的配置的信息都是来自于文件中。
+	* 永久性的设置主机名称
+		# cat /etc/sysconfig/network
+
+读取linux系统上文件内容的命令
+	cat
+
+Linux编辑工具VI
+	# vi filename    -- 编辑文件内容
+	进入编辑插入模式
+		i
+	推出插入模式
+		Esc
+	保持文件
+		第一步：冒号（:）
+		第二步：wq
+	不保存文件
+		第一步：冒号（:）
+		第二步：q!
+
+重启系统
+	* 关机
+		# halt
+	* 重启
+		# reboot
+		# init 6
+
+================================================================
+远程连接工具
+	辅助我们进行使用系统，方便操作
+远程连接四要素
+		* Ip地址
+		* 用户名
+		* 密码
+		* 协议  ssh
+四大远程连接工具
+	* 远程命令行
+		SecureCRT
+		注意事项，当第一次远程连接到linux系统时，进入当前用户的主目录
+	* 远程FTP
+		File Transfer Protocol
+		FileZilla
+	* 远程编辑工具
+		NotePad++
+		UltraEdit
+	* 远程界面工具
+		Xmanager4
+
+主机名与IP地址映射
+	hadoop-senior.ibeifeng.com
+	192.168.217.110
+	配置文件
+		/etc/hosts
+	192.168.217.110	 hadoop-senior.ibeifeng.com  hadoop-senior
+Win7系统
+	C:\Windows\System32\drivers\etc\hosts
+	192.168.217.110	 hadoop-senior.ibeifeng.com  hadoop-senior
+主机名称与IP地址映射配置的好处，作用非常大。
+
+>>>>>>>> 基本命令
+当前目录下，有哪些文件
+	ls   -- list
+	ls -l
+	ll
+	ls -a
+		比ls 多了一些以.开头的文件，以.开头的文件，隐藏文件
+
+特殊目录标识符
+	* 一个点 .  ：  表示的是当前目录
+	* 两个点 .. :	表示的是上级（父级）目录
+
+切换目录
+	cd dirName
+	change directory
+
+创建一个文件
+	touch readme.txt
+
+
+
+
+

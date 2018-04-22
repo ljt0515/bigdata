@@ -1,0 +1,242 @@
+
+>>>>>>系统信息
+[beifeng@hadoop-senior ~]$ uname
+[beifeng@hadoop-senior ~]$ uname -r
+[beifeng@hadoop-senior ~]$ cat /proc/cpuinfo 
+[beifeng@hadoop-senior ~]$ cat /proc/meminfo
+
+显示当前系统日期时间
+[beifeng@hadoop-senior ~]$ date
+Mon Sep 28 16:26:03 EDT 2015
+##  显示日历表
+[beifeng@hadoop-senior ~]$ cal 2015
+## 设置日期和时间
+[root@hadoop-senior beifeng]# date -s 2015-09-30
+Wed Sep 30 00:00:00 EDT 2015
+[root@hadoop-senior beifeng]# date -s 14:42:45
+Wed Sep 30 14:42:45 EDT 2015
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[beifeng@hadoop-senior ~]$ df -lh
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/sda2              16G  3.4G   12G  23% /
+tmpfs                 498M   80K  498M   1% /dev/shm
+/dev/sda1             194M   29M  156M  16% /boot
+
+[beifeng@hadoop-senior ~]$ du -sh /home/beifeng/
+188M    /home/beifeng/
+
+[root@hadoop-senior beifeng]# fdisk -l
+修复磁盘,自动修复
+# fsck /dev/sda3 
+
+# 查看挂在磁盘信息
+[root@hadoop-senior beifeng]# mount
+
+## 挂在磁盘
+# mount /dev/sdb1 /data01
+## 卸载磁盘
+# umount /dev/sdb1
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+## 看系统内存使用情况
+[beifeng@hadoop-senior ~]$ free -m
+             total       used       free     shared    buffers     cached
+Mem:          3043        849       2194          0         49        478
+-/+ buffers/cache:        321       2721
+Swap:         4095          0       4095
+
+各个进程内存的使用情况
+[beifeng@hadoop-senior ~]$ top
+
+M：详细信息
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+[beifeng@hadoop-senior ~]$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 00:0C:29:CD:79:8C  
+          inet addr:192.168.217.110  Bcast:192.168.217.255  Mask:255.255.255.0
+          inet6 addr: fe80::20c:29ff:fecd:798c/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:201808 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:161514 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:1000 
+          RX bytes:208548228 (198.8 MiB)  TX bytes:159028274 (151.6 MiB)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:16436  Metric:1
+          RX packets:11828 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:11828 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:6987856 (6.6 MiB)  TX bytes:6987856 (6.6 MiB)
+
+[beifeng@hadoop-senior ~]$ cd /etc/sysconfig/network-scripts/ 
+[beifeng@hadoop-senior network-scripts]$ ls
+ifcfg-eth0   ifdown-ipv6    ifdown-tunnel  ifup-ipv6   ifup-routes       network-functions
+ifcfg-lo     ifdown-isdn    ifup           ifup-isdn   ifup-sit          network-functions-ipv6
+ifdown       ifdown-post    ifup-aliases   ifup-plip   ifup-tunnel
+ifdown-bnep  ifdown-ppp     ifup-bnep      ifup-plusb  ifup-wireless
+ifdown-eth   ifdown-routes  ifup-eth       ifup-post   init.ipv6-global
+ifdown-ippp  ifdown-sit     ifup-ippp      ifup-ppp    net.hotplug
+[beifeng@hadoop-senior network-scripts]$ cat ifcfg-eth0
+DEVICE=eth0
+TYPE=Ethernet
+UUID=57d4c2c9-9e9c-48f8-a654-8e5bdbadafb8
+ONBOOT=yes
+NM_CONTROLLED=yes
+BOOTPROTO=none
+DEFROUTE=yes
+IPV4_FAILURE_FATAL=yes
+IPV6INIT=no
+NAME="System eth0"
+HWADDR=00:0C:29:CD:79:8C
+IPADDR=192.168.217.110
+PREFIX=24
+GATEWAY=192.168.217.1
+LAST_CONNECT=1443449722
+[beifeng@hadoop-senior network-scripts]$ cat ifcfg-lo
+DEVICE=lo
+IPADDR=127.0.0.1
+NETMASK=255.0.0.0
+NETWORK=127.0.0.0
+# If you're having problems with gated making 127.0.0.0/8 a martian,
+# you can change this to something else (255.255.255.255, for example)
+BROADCAST=127.255.255.255
+ONBOOT=yes
+NAME=loopback
+
+[beifeng@hadoop-senior network-scripts]$ ping 0.0.0.0
+PING 0.0.0.0 (127.0.0.1) 56(84) bytes of data.
+64 bytes from 127.0.0.1: icmp_seq=1 ttl=64 time=0.056 ms
+64 bytes from 127.0.0.1: icmp_seq=2 ttl=64 time=0.044 ms
+--- 0.0.0.0 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1992ms
+rtt min/avg/max/mdev = 0.044/0.050/0.056/0.006 ms
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+在Linux下软件的安装方式
+第一种方式
+		RPM命令
+	#### 检查某个软件是否安装
+	# rpm -qa|grep java
+	#### 卸载已安装的软件
+	# rpm -e --nodeps xxxxxx
+	#### 安装软件
+	# rpm -ivh xxx.rpm
+后续：
+	如何使用rpm包安装mysql数据库
+
+第二种方式
+	tar
+	源码
+	编译
+不推荐大家使用源码编译方式安装软件
+------------------------------
+zip软件
+	#### 解压
+	$ unzip xxx.zip
+	#### 压缩
+	$ zip yy.zip file
+
+tar软件
+* 解压
+	##### 解压到当前目录
+	$ tar -zxvf xxxx.tar.gz
+	##### 解压到指定的目录
+	$ tar -zxvf xxxx.tar.gz -C dir
+* 压缩
+	$ tar -zcvf zzzz.tar.gz dir
+
+
+第三种方式
+	yum
+作业：
+	大家了解使用
+* 需要配置源
+* 软件包依赖关系以及各个软件的安装顺序
+
+============================================================
+如何设置普通用户的sudo权限
+$ su 
+# vi /etc/sudoers
+	在第一行添加如下内容：
+	beifeng ALL=(root)NOPASSWD:ALL
+
+### 查看防火墙是否关闭
+$ sudo service iptables status
+### 关闭防火墙
+$ sudo service iptables stop
+### 启动防火墙
+$ sudo service iptables start
+
+永久性设置防火墙关闭
+$ sudo chkconfig iptables off|on
+
+SELINUX 禁用
+[beifeng@hadoop-senior ~]$ cat /etc/sysconfig/selinux 
+
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of these two values:
+#     targeted - Targeted processes are protected,
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted 
+
+
+=============================================================
+在Linux当中，自带的调度功能crontab
+针对用户
+	每个用户都可以调度自己的任务
+
+在beifeng用户下创建定时任务
+	功能：每分钟执行一次，将时间写入到指定文件中
+[beifeng@hadoop-senior ~]$ crontab -e 
+### first crobtab
+*/1 * * * * /bin/date >> /home/beifeng/bf-log.txt
+
+列出目前所有的定时任务
+[beifeng@hadoop-senior ~]$ crontab -l 
+### first crobtab
+*/1 * * * * /bin/date >> /home/beifeng/bf-log.txt
+
+删除所有的定时任务
+[beifeng@hadoop-senior ~]$ crontab -r
+
+>>>>>>>>>>>>>>>>>>>>>>>
+crontab 基本定义
+语法：
+	* * * * * command
+说明：
+	1）六个字段之间，使用逗号隔开
+	2）字段的含义
+	*       *        *        *        *
+	分：1-59, 每十分钟 */10
+			时：0-23,*/2
+					日：1 -31
+							月：1-12
+									   星期：（0-6）
+
+举一些例子：
+### 每天21:30 执行
+30 21 * * * cmd01
+
+### 每个月1,11,21 的2:30执行
+30 2 1,11,21 * * cmd02
+
+### 每周六或者每周日，1:45 执行
+45 1 * * 6,0 cmd03
+
+### 每天20：00至 23:00 ，每半个小时执行一次
+0,30 20-23 * * * cmd04
+
+### 每一小时执行一次
+* */1 * * cmd05
+
+
+

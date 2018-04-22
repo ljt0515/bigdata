@@ -1,0 +1,19 @@
+1、JDK
+JAVA_HOME  D:\Java\jdk\jdk1.7.0_65
+CLASSPATH .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
+PATH %JAVA_HOME%\bin;%JAVA_HOME%\jre\bin;
+
+export JAVA_HOME=/home/runtime/jdk/jdk1.7.0_65
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tool.jar
+
+2、maven
+M2_HOME = D:\Java\apache-maven-3.0.5
+MAVEN_HOME = D:\Java\apache-maven-3.0.5
+PATH ;%MAVEN_HOME%\bin;%M2_HOME%\bin
+
+export M2_HOME=/home/runtime/maven/apache-maven-3.0.5
+export MAVEN_HOME=/home/runtime/maven/apache-maven-3.0.5
+export PATH=;%MAVEN_HOME%\bin:%M2_HOME%\bin
+
+3、
